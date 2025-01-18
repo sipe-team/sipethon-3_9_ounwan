@@ -60,30 +60,30 @@ export const mapFortuneData = (data: FortuneData): MappedFortune[] => {
     mapCategory(
       'health',
       '건강운',
-      data.health_score,
-      data.health_desc,
-      data.health_one_line_comment
+      data?.health_score || 0,
+      data?.health_desc,
+      data?.health_one_line_comment
     ),
     mapCategory(
       'money',
       '재물운',
-      data.money_score,
-      data.money_desc,
-      data.money_one_line_comment
+      data?.money_score || 0,
+      data?.money_desc,
+      data?.money_one_line_comment
     ),
     mapCategory(
       'love',
       '애정운',
-      data.love_score,
-      data.love_desc,
-      data.love_one_line_comment
+      data?.love_score || 0,
+      data?.love_desc,
+      data?.love_one_line_comment
     ),
     mapCategory(
       'job',
       '직업운',
-      data.job_score,
-      data.job_desc,
-      data.job_one_line_comment
+      data?.job_score || 0,
+      data?.job_desc,
+      data?.job_one_line_comment
     ),
   ];
 };

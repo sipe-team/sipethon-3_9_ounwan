@@ -35,10 +35,10 @@ function Result() {
           setData(res);
           setTotalScore(
             Math.floor(
-              (res.health_score +
-                res.job_score +
-                res.love_score +
-                res.money_score) /
+              (res?.health_score +
+                res?.job_score +
+                res?.love_score +
+                res?.money_score) /
                 4
             )
           );
