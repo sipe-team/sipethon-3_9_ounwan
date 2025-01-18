@@ -58,10 +58,10 @@ function Form() {
       onSubmit={handleSubmit(onSubmit, onError)}
       className="flex h-full w-full flex-col"
     >
-      <div className="flex h-[15%] w-full grow-0 items-center border-b-[2px] border-solid border-gray-300 px-6 text-[32px] text-[#394F6E]">
+      <div className="flex h-[60px] w-full flex-none items-center border-b-[2px] border-solid border-gray-300 px-6 text-[32px] text-[#394F6E]">
         <h1>올해의 운세 완성</h1>
       </div>
-      <div className="my-4 flex h-[10%] w-full grow-0 items-center justify-start px-6 text-[24px] font-semibold text-[#363E76]">
+      <div className="my-4 flex w-full grow-0 items-center justify-start px-6 text-[24px] font-semibold text-[#363E76]">
         새로운 사주 정보를 입력해주세요!
       </div>
       <article className="flex h-[calc(100%-115px)] w-full flex-1 flex-col px-6">
@@ -84,11 +84,11 @@ function Form() {
 
         <section className="mb-6 flex w-full flex-col">
           <div className="mb-1 font-medium">성별</div>
-          <div className="flex h-[37px] w-full justify-evenly">
+          <div className="flex h-[37px] w-full justify-between gap-2">
             <button
               type="button"
               onClick={(e) => setValue('gender', 'man')}
-              className={cn('h-full w-[47%] rounded-[8px] bg-[#EDEDED]', {
+              className={cn('h-full flex-1 rounded-[8px] bg-[#EDEDED]', {
                 'bg-[#394F6E]': gender === 'man',
                 'text-white': gender === 'man',
               })}
@@ -98,7 +98,7 @@ function Form() {
             <button
               type="button"
               onClick={() => setValue('gender', 'woman')}
-              className={cn('h-[37px] w-[47%] rounded-[8px] bg-[#EDEDED]', {
+              className={cn('h-[37px] flex-1 rounded-[8px] bg-[#EDEDED]', {
                 'bg-[#394F6E]': gender === 'woman',
                 'text-white': gender === 'woman',
               })}
@@ -148,7 +148,7 @@ function Form() {
           <section
             onClick={() => setValue('isLunar', true)}
             className={cn(
-              'box-border flex h-10 w-[83px] cursor-poi~nter items-center justify-center rounded-r-[100px] border border-solid',
+              'cursor-poi~nter box-border flex h-10 w-[83px] items-center justify-center rounded-r-[100px] border border-solid',
               {
                 'bg-[#394F6E]': isLunar === true,
               }
@@ -182,7 +182,7 @@ function Form() {
           </div>
         </section>
       </article>
-      <div className="h-[15%] w-full">
+      <div className="h-[15%] w-full flex-none">
         <button className="flex h-10 w-full px-6" type="submit">
           <div className="flex h-full w-full cursor-pointer items-center justify-center rounded-md bg-[#29518C] text-white">
             2025년 운세 확인하기

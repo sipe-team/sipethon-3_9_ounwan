@@ -9,9 +9,11 @@ function Result() {
   console.log(id);
 
   return (
-    <section className="h-full w-full">
-      <h1 className="flex h-[40px] w-full items-center p-4">올해 운세 완성</h1>
-      <article className="flex h-full w-full flex-col items-stretch p-4">
+    <section className="flex h-full w-full flex-col">
+      <div className="flex h-[60px] w-full flex-none items-center border-b-[2px] border-solid border-gray-300 px-6 text-[32px] text-[#394F6E]">
+        <h1>올해의 운세 완성</h1>
+      </div>
+      <article className="my-4 flex h-full w-full flex-col items-stretch px-6">
         <section className="flex flex-col items-center gap-3 text-center text-[#363E76]">
           <p className="text-2xl">
             <span className="font-semibold">홍길동</span> 님의 <br /> 2025년
@@ -60,9 +62,11 @@ function Result() {
           </ul>
         </section>
       </article>
-      <div className="flex items-center justify-center p-4">
-        <button className="w-full rounded bg-slate-400" type="submit">
-          운세 상세 풀이보기
+      <div className="h-[15%] w-full flex-none">
+        <button className="flex h-10 w-full px-6" type="button">
+          <div className="flex h-full w-full cursor-pointer items-center justify-center rounded-md bg-[#29518C] text-white">
+            운세 상세 풀이보기
+          </div>
         </button>
       </div>
     </section>

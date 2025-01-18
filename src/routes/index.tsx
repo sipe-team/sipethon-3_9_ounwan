@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { DecoratedBox } from '../components/DecoratedBox.tsx';
 
 export const Route = createFileRoute('/')({
@@ -6,10 +6,14 @@ export const Route = createFileRoute('/')({
 });
 
 function RouteComponent() {
+  const navigate = useNavigate();
+
   return (
-    <section className="h-full w-full">
-      <h1 className="flex h-[40px] w-full items-center p-4">올해 운세 완성</h1>
-      <article className="flex h-full w-full flex-col items-stretch p-4">
+    <section className="flex h-full w-full flex-col">
+      <div className="flex h-[60px] w-full flex-none items-center border-b-[2px] border-solid border-gray-300 px-6 text-[32px] text-[#394F6E]">
+        <h1>올해의 운세 완성</h1>
+      </div>
+      <article className="my-4 flex h-full w-full flex-col items-stretch px-6">
         <DecoratedBox>
           <div className="flex flex-col items-center gap-8 py-28">
             <img
@@ -27,9 +31,15 @@ function RouteComponent() {
         </DecoratedBox>
         <p className="pt-4 text-gray-500">* 운세는 재미로 보기! 맹신금지X</p>
       </article>
-      <div className="flex items-center justify-center p-4">
-        <button className="w-full rounded bg-slate-400" type="submit">
-          2025년 내 사주정보 입력하기
+      <div className="h-[15%] w-full flex-none">
+        <button
+          className="flex h-10 w-full px-6"
+          type="button"
+          onClick={() => navigate({ to: '/form' })}
+        >
+          <div className="flex h-full w-full cursor-pointer items-center justify-center rounded-md bg-[#29518C] text-white">
+            2025년 내 사주정보 입력하기
+          </div>
         </button>
       </div>
     </section>
