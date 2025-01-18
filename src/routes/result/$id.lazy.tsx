@@ -4,8 +4,8 @@ import { useMutation } from '@tanstack/react-query';
 import { FortuneData } from '@/feature/form/form-response-schema.ts';
 import { axiosClient } from '@/feature/axios/axios-client.ts';
 
-import { DecoratedBox } from '../../components/DecoratedBox.tsx';
 import { useEffect, useState } from 'react';
+import { DecoratedBox } from '@/components/DecoratedBox.tsx';
 
 export const Route = createLazyFileRoute('/result/$id')({
   component: Result,
