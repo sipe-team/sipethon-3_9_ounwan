@@ -1,5 +1,4 @@
 import { Outlet, createRootRoute } from '@tanstack/react-router';
-import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import * as React from 'react';
 
 export const Route = createRootRoute({
@@ -14,7 +13,6 @@ function RootComponent() {
           <Outlet />
         </div>
       </main>
-      <TanStackRouterDevtools />
     </React.Fragment>
   );
 }
