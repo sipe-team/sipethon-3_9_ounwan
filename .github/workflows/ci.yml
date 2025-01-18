@@ -1,0 +1,55 @@
+name: build-test
+
+on:
+  pull_request:
+    branches: ["**"]
+    types: [labeled, unlabeled, opened, synchronize, reopened]
+
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read # This is required for actions/checkout
+
+# Cancel previous workflows if they are the same workflow on same ref (branch/tags)
+# with the same event (push/pull_request) even they are in progress.
+# This setting will help reduce the number of duplicated workflows.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      # Node.js 버전을 20.x로 설정
+      matrix:
+        node-version: [20.x] # Node.js 20.x 버전 사용
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }} # Node.js 20.x 버전
+          cache: 'yarn'
+
+      # node_modules 캐시 설정
+      - name: Cache node_modules
+        id: node-modules-cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules # 캐시할 경로
+          key: node-modules-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }} # 캐시 키
+          restore-keys: | # 캐시 키가 없을 경우 대체할 키
+            node-modules-${{ runner.os }}-
+
+      # 의존성 설치
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      # ESLint 실행
+      - name: Run ESLint
+        run: yarn lint
+
+      # 프로젝트 빌드
+      - name: Build project
+        run: yarn build
