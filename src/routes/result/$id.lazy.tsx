@@ -1,9 +1,10 @@
-import { createLazyFileRoute } from '@tanstack/react-router';
+import { createLazyFileRoute, useNavigate } from '@tanstack/react-router';
+import { useMutation } from '@tanstack/react-query';
+
+import { FortuneData } from '@/feature/form/form-response-schema.ts';
+import { axiosClient } from '@/feature/axios/axios-client.ts';
 
 import { DecoratedBox } from '../../components/DecoratedBox.tsx';
-import { FortuneData } from '../../feature/form/form-response-schema.ts';
-import { useMutation } from '@tanstack/react-query';
-import { axiosClient } from '../../feature/axios/axios-client.ts';
 import { useEffect, useState } from 'react';
 
 export const Route = createLazyFileRoute('/result/$id')({
@@ -11,6 +12,7 @@ export const Route = createLazyFileRoute('/result/$id')({
 });
 
 function Result() {
+  const navigate = useNavigate();
   const [data, setData] = useState<FortuneData | null>(null);
   const [totalScore, setTotalScore] = useState<number>(0);
   const { id } = Route.useParams();
@@ -105,7 +107,11 @@ function Result() {
         </section>
       </article>
       <div className="h-[15%] w-full flex-none">
-        <button className="flex h-12 w-full px-6" type="button">
+        <button
+          className="flex h-12 w-full px-6"
+          type="button"
+          onClick={() => navigate({ to: `/result/${id}/detail` })}
+        >
           <div className="flex h-full w-full cursor-pointer items-center justify-center rounded-md bg-[#363E76] text-white">
             운세 상세 풀이보기
           </div>
