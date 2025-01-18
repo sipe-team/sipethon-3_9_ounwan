@@ -1,12 +1,10 @@
+import { useQuery } from '@tanstack/react-query';
+import { createLazyFileRoute, useNavigate } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 
-import { useMutation } from '@tanstack/react-query';
-import { createLazyFileRoute, useNavigate } from '@tanstack/react-router';
-
+import { DecoratedBox } from '@/components/DecoratedBox.tsx';
 import { axiosClient } from '@/feature/axios/axios-client.ts';
 import { FortuneData } from '@/feature/form/form-response-schema.ts';
-
-import { DecoratedBox } from '@/components/DecoratedBox.tsx';
 
 export const Route = createLazyFileRoute('/result/$id/')({
   component: Result,
@@ -14,42 +12,32 @@ export const Route = createLazyFileRoute('/result/$id/')({
 
 function Result() {
   const navigate = useNavigate();
-  const [data, setData] = useState<FortuneData | null>(null);
+  const [fortuneData, setFortuneData] = useState<FortuneData | null>(null);
   const [totalScore, setTotalScore] = useState<number>(0);
   const { id } = Route.useParams();
-  const { mutateAsync: getFortuneData } = useMutation({
-    mutationFn: async (id: string) => {
-      const response = await axiosClient.post<FortuneData>(`results/${id}`);
-      return response.data;
-    },
-    onError: () => {
-      alert('운세 정보 조회에 실패했습니다. 다시 시도해주세요.');
-    },
+
+  const { data, isSuccess } = useQuery({
+    queryKey: ['fortune-data'],
+    queryFn: async () => await axiosClient.post<FortuneData>(`results/${id}`),
   });
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (id) {
-        try {
-          const res = await getFortuneData(id);
-          setData(res);
-          setTotalScore(
-            Math.floor(
-              (res?.health_score +
-                res?.job_score +
-                res?.love_score +
-                res?.money_score) /
-                4
-            )
-          );
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    };
+    if (!id || !isSuccess) {
+      return;
+    }
 
-    fetchData();
-  }, [id]);
+    const res = data.data;
+    setFortuneData(res);
+    setTotalScore(
+      Math.floor(
+        (res?.health_score +
+          res?.job_score +
+          res?.love_score +
+          res?.money_score) /
+          4
+      )
+    );
+  }, [isSuccess]);
 
   return (
     <section className="flex h-full w-full flex-col">
@@ -60,8 +48,8 @@ function Result() {
         <DecoratedBox type="short">
           <div className="flex flex-col items-center gap-3 py-6 text-center text-[#363E76]">
             <p className="text-2xl">
-              <span className="font-semibold">{data?.username}</span> 님의{' '}
-              <br /> 2025년 운세 총 점수
+              <span className="font-semibold">{fortuneData?.username}</span>{' '}
+              님의 <br /> 2025년 운세 총 점수
             </p>
             <p className="text-5xl font-bold">{totalScore}점</p>
           </div>
@@ -72,7 +60,7 @@ function Result() {
               <div className="relative">
                 <img src="/images/snake_health.png" alt="" />
                 <span className="absolute left-[34%] top-[19%] flex h-[66%] w-[53%] items-center justify-center text-2xl text-[#7DBEFF]">
-                  {data?.health_score}점
+                  {fortuneData?.health_score}점
                 </span>
               </div>
               <p className="ml-auto w-[80%] pt-1 text-center text-xl">건강운</p>
@@ -81,7 +69,7 @@ function Result() {
               <div className="relative">
                 <img src="/images/snake_money.png" alt="" />
                 <span className="absolute left-[34%] top-[19%] flex h-[66%] w-[53%] items-center justify-center text-2xl text-[#64CAE2]">
-                  {data?.money_score}점
+                  {fortuneData?.money_score}점
                 </span>
               </div>
               <p className="ml-auto w-[80%] pt-1 text-center text-xl">재물운</p>
@@ -90,7 +78,7 @@ function Result() {
               <div className="relative">
                 <img src="/images/snake_love.png" alt="" />
                 <span className="absolute left-[34%] top-[19%] flex h-[66%] w-[53%] items-center justify-center text-2xl text-[#809BFF]">
-                  {data?.love_score}점
+                  {fortuneData?.love_score}점
                 </span>
               </div>
               <p className="ml-auto w-[80%] pt-1 text-center text-xl">애정운</p>
@@ -99,7 +87,7 @@ function Result() {
               <div className="relative">
                 <img src="/images/snake_job.png" alt="" />
                 <span className="absolute left-[34%] top-[19%] flex h-[66%] w-[53%] items-center justify-center text-2xl text-[#3DA9F2]">
-                  {data?.job_score}점
+                  {fortuneData?.job_score}점
                 </span>
               </div>
               <p className="ml-auto w-[80%] pt-1 text-center text-xl">직업운</p>
