@@ -25,7 +25,7 @@ function Result() {
           <ul className="mx-auto mt-10 flex max-w-[400px] flex-wrap justify-between gap-8">
             <li className="max-w-[180px] flex-[30%]">
               <div className="relative">
-                <img src="/snake_skyblue.png" alt="" />
+                <img src="/images/snake_love.png" alt="" />
                 <span className="absolute left-[34%] top-[19%] flex h-[66%] w-[53%] items-center justify-center text-2xl">
                   54점
                 </span>
@@ -34,7 +34,7 @@ function Result() {
             </li>
             <li className="max-w-[180px] flex-[30%]">
               <div className="relative">
-                <img src="/snake_skyblue.png" alt="" />
+                <img src="/images/snake_love.png" alt="" />
                 <span className="absolute left-[34%] top-[19%] flex h-[66%] w-[53%] items-center justify-center text-2xl">
                   54점
                 </span>
@@ -43,7 +43,7 @@ function Result() {
             </li>
             <li className="max-w-[180px] flex-[30%]">
               <div className="relative">
-                <img src="/snake_skyblue.png" alt="" />
+                <img src="/images/snake_love.png" alt="" />
                 <span className="absolute left-[34%] top-[19%] flex h-[66%] w-[53%] items-center justify-center text-2xl">
                   54점
                 </span>
@@ -52,7 +52,7 @@ function Result() {
             </li>
             <li className="max-w-[180px] flex-[30%]">
               <div className="relative">
-                <img src="/snake_skyblue.png" alt="" />
+                <img src="/images/snake_love.png" alt="" />
                 <span className="absolute left-[34%] top-[19%] flex h-[66%] w-[53%] items-center justify-center text-2xl">
                   54점
                 </span>

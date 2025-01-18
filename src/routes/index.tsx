@@ -17,7 +17,7 @@ function RouteComponent() {
         <DecoratedBox>
           <div className="flex flex-col items-center gap-8 py-28">
             <img
-              src="/src/assets/cuteSnake.png"
+              src="/images/snake_gradient.png"
               className="w-[103px]"
               alt=""
             ></img>
