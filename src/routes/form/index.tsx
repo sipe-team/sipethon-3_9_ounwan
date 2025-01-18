@@ -207,6 +207,7 @@ function Form() {
         errors={errors}
         setAlertOpen={setAlertOpen}
       />
+      <LoadingOverlay isPending={isPending} />
     </form>
   );
 }
@@ -215,10 +216,12 @@ import {
   AlertDialog,
   AlertDialogCancel,
   AlertDialogContent,
+  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { LoadingSnake } from '@/feature/lottie/loading';
 import { useState } from 'react';
 
 export function CustomAlertDialog({
@@ -228,10 +231,9 @@ export function CustomAlertDialog({
 }: {
   isOpen: boolean;
   errors: any;
-  setAlertOpen: (boolean) => void;
+  setAlertOpen: (isOpen: boolean) => void;
 }) {
-  const getFirstErrorMessege = (errors) => {
-    console.log(errors, 'errors');
+  const getFirstErrorMessege = (errors: any) => {
     if (errors?.name) {
       return errors.name.message;
     }
@@ -250,7 +252,6 @@ export function CustomAlertDialog({
           <AlertDialogTitle className="text-center font-[#394F6E]">
             {getFirstErrorMessege(errors)}
           </AlertDialogTitle>
-          {/* <AlertDialogDescription></AlertDialogDescription> */}
         </AlertDialogHeader>
         <AlertDialogFooter className="flex h-10 w-full justify-center sm:justify-center">
           <AlertDialogCancel
@@ -260,6 +261,25 @@ export function CustomAlertDialog({
             닫기
           </AlertDialogCancel>
         </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+
+export function LoadingOverlay({ isPending }: { isPending: boolean }) {
+  return (
+    <AlertDialog open={isPending}>
+      <AlertDialogTitle hidden={true} />
+      <AlertDialogContent className="h-full max-w-[500px]">
+        <AlertDialogDescription className="flex h-full w-full flex-col items-center justify-center">
+          사주분석중...
+          {isPending && (
+            <div className="my-10">
+              <LoadingSnake />
+            </div>
+          )}
+          2025년은 소띠, 뱀띠 닭띠의 운세가 좋아요
+        </AlertDialogDescription>
       </AlertDialogContent>
     </AlertDialog>
   );
