@@ -8,7 +8,7 @@ import { axiosClient } from '@/feature/axios/axios-client.ts';
 
 import { DecoratedBox } from '@/components/DecoratedBox.tsx';
 
-export const Route = createLazyFileRoute('/result/$id')({
+export const Route = createLazyFileRoute('/result/$id/')({
   component: Result,
 });
 
