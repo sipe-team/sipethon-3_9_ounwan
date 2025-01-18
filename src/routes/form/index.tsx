@@ -254,7 +254,7 @@ export function CustomAlertDialog({
         className="w-[90%] max-w-[400px] rounded-md"
         aria-describedby={alertDialogDescriptionId}
       >
-        <AlertDialogDescription>커스텀 다이얼로그</AlertDialogDescription>
+        <AlertDialogDescription></AlertDialogDescription>
         <AlertDialogHeader>
           <AlertDialogTitle className="text-center font-[#394F6E]">
             {getFirstErrorMessege(errors)}
