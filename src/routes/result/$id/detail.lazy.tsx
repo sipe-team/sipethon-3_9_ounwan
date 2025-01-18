@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { createLazyFileRoute } from '@tanstack/react-router';
+import { createLazyFileRoute, useNavigate } from '@tanstack/react-router';
 import { useMutation } from '@tanstack/react-query';
 
 import { FortuneData } from '@/feature/form/form-response-schema.ts';
@@ -32,6 +32,7 @@ const tabs = [
 ];
 
 function Detail() {
+  const navigate = useNavigate();
   const { id } = Route.useParams();
   const [selectedTab, setSelectedTab] = useState<string>('');
   const [fortuneData, setFortuneData] = useState<MappedFortune[]>([]);
@@ -65,6 +66,16 @@ function Detail() {
   useEffect(() => {
     setSelectedData(fortuneData.find((data) => data.type === selectedTab));
   }, [fortuneData, selectedTab]);
+
+  function navigateTo() {
+    if (fortuneData.length === 0) return null;
+
+    const lowestScoreFortune = fortuneData.reduce((lowest, current) =>
+      current.score < lowest.score ? current : lowest
+    );
+
+    navigate({ to: `/download/${lowestScoreFortune.type}` });
+  }
 
   return (
     <section className="flex h-full w-full flex-col">
@@ -112,7 +123,10 @@ function Detail() {
       </article>
       <div className="h-[15%] w-full flex-none">
         <button className="flex h-12 w-full px-6" type="button">
-          <div className="flex h-full w-full cursor-pointer items-center justify-center rounded-md bg-[#363E76] text-white">
+          <div
+            className="flex h-full w-full cursor-pointer items-center justify-center rounded-md bg-[#363E76] text-white"
+            onClick={() => navigateTo()}
+          >
             운세 업그레이드 부적 ㄱㄱ
           </div>
         </button>
