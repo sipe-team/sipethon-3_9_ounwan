@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { createLazyFileRoute, useNavigate } from '@tanstack/react-router';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { FortuneData } from '@/feature/form/form-response-schema.ts';
 import { axiosClient } from '@/feature/axios/axios-client.ts';
@@ -37,31 +37,17 @@ function Detail() {
   const [selectedTab, setSelectedTab] = useState<string>('');
   const [fortuneData, setFortuneData] = useState<MappedFortune[]>([]);
   const [selectedData, setSelectedData] = useState<MappedFortune>();
-  const { mutateAsync: getFortuneData, isPending } = useMutation({
-    mutationFn: async (id: string) => {
-      const response = await axiosClient.post<FortuneData>(`results/${id}`);
-      return response.data;
-    },
-    onError: () => {
-      alert('운세 정보 조회에 실패했습니다. 다시 시도해주세요.');
-    },
+  const { data, isSuccess } = useQuery({
+    queryKey: ['fortune-data'],
+    queryFn: async () => await axiosClient.post<FortuneData>(`results/${id}`),
   });
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (id) {
-        try {
-          const res = await getFortuneData(id);
-          setFortuneData(mapFortuneData(res));
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    };
-
-    fetchData();
+    if (data) {
+      setFortuneData(mapFortuneData(data?.data));
+    }
     setSelectedTab('health');
-  }, [id]);
+  }, [isSuccess]);
 
   useEffect(() => {
     setSelectedData(fortuneData.find((data) => data.type === selectedTab));
