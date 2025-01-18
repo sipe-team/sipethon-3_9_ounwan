@@ -23,7 +23,18 @@ export default tseslint.config(
       globals: globals.browser,
       parser: tseslint.parser,
       parserOptions: {
-        project: './tsconfig.json',
+        project: ['./tsconfig.app.json', './tsconfig.node.json'],
+        tsconfigRootDir: process.cwd(),
+      },
+    },
+    settings: {
+      'import/resolver': {
+        typescript: {
+          project: ['./tsconfig.app.json', './tsconfig.node.json'],
+        },
+        node: {
+          extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        },
       },
     },
     plugins: {

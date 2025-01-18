@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { DecoratedBox } from '../components/DecoratedBox.tsx';
+
+import { DecoratedBox } from '@/components/DecoratedBox.tsx';
 
 export const Route = createFileRoute('/')({
   component: RouteComponent,

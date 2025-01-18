@@ -1,9 +1,10 @@
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useForm, useWatch } from 'react-hook-form';
-import { axiosClient } from '../../feature/axios/axios-client';
-import { FortuneData } from '../../feature/form/form-response-schema';
-import { cn } from '../../utils/tw-merge';
+import { axiosClient } from '@/feature/axios/axios-client.ts';
+import { FortuneData } from '@/feature/form/form-response-schema.ts';
+import { cn } from '@/utils/tw-merge.ts';
 
 interface DefaultFormValues {
   name: string;
@@ -223,6 +224,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { LoadingSnake } from '@/feature/lottie/loading';
 import { useState } from 'react';
+import { DecoratedBox } from '@/components/DecoratedBox.tsx';
 
 export function CustomAlertDialog({
   isOpen,
@@ -233,6 +235,7 @@ export function CustomAlertDialog({
   errors: any;
   setAlertOpen: (isOpen: boolean) => void;
 }) {
+  const alertDialogDescriptionId = 'alert-dialog-description';
   const getFirstErrorMessege = (errors: any) => {
     if (errors?.name) {
       return errors.name.message;
@@ -247,7 +250,12 @@ export function CustomAlertDialog({
 
   return (
     <AlertDialog open={isOpen} onOpenChange={setAlertOpen}>
-      <AlertDialogContent className="w-[90%] max-w-[400px] rounded-md">
+      <AlertDialogTitle hidden={true} />
+      <AlertDialogContent
+        className="w-[90%] max-w-[400px] rounded-md"
+        aria-describedby={alertDialogDescriptionId}
+      >
+        <AlertDialogDescription>커스텀 다이얼로그</AlertDialogDescription>
         <AlertDialogHeader>
           <AlertDialogTitle className="text-center font-[#394F6E]">
             {getFirstErrorMessege(errors)}
@@ -267,19 +275,28 @@ export function CustomAlertDialog({
 }
 
 export function LoadingOverlay({ isPending }: { isPending: boolean }) {
+  const dialogDescriptionId = 'loading-dialog-description';
   return (
     <AlertDialog open={isPending}>
       <AlertDialogTitle hidden={true} />
-      <AlertDialogContent className="h-full max-w-[500px]">
-        <AlertDialogDescription className="flex h-full w-full flex-col items-center justify-center">
-          사주분석중...
-          {isPending && (
-            <div className="my-10">
-              <LoadingSnake />
-            </div>
-          )}
-          2025년은 소띠, 뱀띠 닭띠의 운세가 좋아요
-        </AlertDialogDescription>
+      <AlertDialogContent
+        className="h-full max-w-[500px]"
+        aria-describedby={dialogDescriptionId}
+      >
+        <div id={dialogDescriptionId}>
+          <VisuallyHidden>
+            사주 정보를 분석하고 있습니다. 잠시만 기다려주세요.
+          </VisuallyHidden>
+          <AlertDialogDescription className="flex h-full w-full flex-col items-center justify-center">
+            사주분석중...
+            {isPending && (
+              <div className="my-10">
+                <LoadingSnake />
+              </div>
+            )}
+            2025년은 소띠, 뱀띠 닭띠의 운세가 좋아요
+          </AlertDialogDescription>
+        </div>
       </AlertDialogContent>
     </AlertDialog>
   );
