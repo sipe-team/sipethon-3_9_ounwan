@@ -1,5 +1,7 @@
 import { createLazyFileRoute } from '@tanstack/react-router';
 
+import { DecoratedBox } from '../../components/DecoratedBox.tsx';
+
 export const Route = createLazyFileRoute('/result/$id')({
   component: Result,
 });
@@ -14,13 +16,15 @@ function Result() {
         <h1>올해의 운세 완성</h1>
       </div>
       <article className="my-4 flex h-full w-full flex-col items-stretch px-6">
-        <section className="flex flex-col items-center gap-3 text-center text-[#363E76]">
-          <p className="text-2xl">
-            <span className="font-semibold">홍길동</span> 님의 <br /> 2025년
-            운세 총 점수
-          </p>
-          <p className="text-5xl font-bold">85점</p>
-        </section>
+        <DecoratedBox type="short">
+          <div className="flex flex-col items-center gap-3 py-6 text-center text-[#363E76]">
+            <p className="text-2xl">
+              <span className="font-semibold">홍길동</span> 님의 <br /> 2025년
+              운세 총 점수
+            </p>
+            <p className="text-5xl font-bold">85점</p>
+          </div>
+        </DecoratedBox>
         <section>
           <ul className="mx-auto mt-10 flex max-w-[400px] flex-wrap justify-between gap-8">
             <li className="max-w-[180px] flex-[30%]">
