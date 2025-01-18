@@ -1,12 +1,15 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useForm, useWatch } from 'react-hook-form';
+import { axiosClient } from '../../feature/axios/axios-client';
+import { FortuneData } from '../../feature/form/form-response-schema';
 import { cn } from '../../utils/tw-merge';
 
 interface DefaultFormValues {
   name: string;
-  gender: 'man' | 'woman';
+  gender: 'Male' | 'Female';
   birthday: string;
-  birthTime: string;
+  birthtime: string;
   isLunar: boolean;
 }
 
@@ -15,6 +18,21 @@ export const Route = createFileRoute('/form/')({
 });
 
 function Form() {
+  const navigate = useNavigate();
+  const { mutateAsync: submitFortune, isPending } = useMutation({
+    mutationFn: async (formData: DefaultFormValues) => {
+      const response = await axiosClient.post<FortuneData>(
+        '/results',
+        formData
+      );
+      return response.data;
+    },
+    onError: (error: unknown) => {
+      alert('운세 정보 제출에 실패했습니다. 다시 시도해주세요.');
+    },
+  });
+  const queryClient = useQueryClient();
+
   const {
     register,
     handleSubmit,
@@ -24,10 +42,10 @@ function Form() {
   } = useForm<DefaultFormValues>({
     defaultValues: {
       name: '',
-      gender: 'man',
+      gender: 'Male',
       birthday: '',
-      birthTime: '',
-      isLunar: true,
+      birthtime: '',
+      isLunar: false,
     },
   });
   const [gender, isLunar] = useWatch({
@@ -35,7 +53,14 @@ function Form() {
     name: ['gender', 'isLunar'],
   });
 
-  const onSubmit = () => {};
+  const onSubmit = async (data: DefaultFormValues) => {
+    try {
+      const res = await submitFortune(data);
+      const id = res.id;
+      queryClient.setQueryData(['fortune-data'], res);
+      navigate({ to: '/result/$id', params: { id } });
+    } catch (error) {}
+  };
 
   const onError = (errors: any) => {
     // name, birthday, birthTime 순서로 에러 체크
@@ -48,7 +73,7 @@ function Form() {
       return;
     }
     if (errors.birthTime) {
-      alert(errors.birthTime.message);
+      alert(errors.birthtime.message);
       return;
     }
   };
@@ -87,20 +112,20 @@ function Form() {
           <div className="flex h-[37px] w-full justify-between gap-2">
             <button
               type="button"
-              onClick={(e) => setValue('gender', 'man')}
+              onClick={() => setValue('gender', 'Male')}
               className={cn('h-full flex-1 rounded-[8px] bg-[#EDEDED]', {
-                'bg-[#394F6E]': gender === 'man',
-                'text-white': gender === 'man',
+                'bg-[#394F6E]': gender === 'Male',
+                'text-white': gender === 'Male',
               })}
             >
               남자
             </button>
             <button
               type="button"
-              onClick={() => setValue('gender', 'woman')}
+              onClick={() => setValue('gender', 'Female')}
               className={cn('h-[37px] flex-1 rounded-[8px] bg-[#EDEDED]', {
-                'bg-[#394F6E]': gender === 'woman',
-                'text-white': gender === 'woman',
+                'bg-[#394F6E]': gender === 'Female',
+                'text-white': gender === 'Female',
               })}
             >
               여자
@@ -171,7 +196,7 @@ function Form() {
             <input
               className="h-full w-full rounded-md border border-solid p-3"
               placeholder="e.g. 19:20"
-              {...register('birthTime', {
+              {...register('birthtime', {
                 required: '태어난 시간을 입력해주세요',
                 pattern: {
                   value: /^([01][0-9]|2[0-3]):([0-5][0-9])$/,
