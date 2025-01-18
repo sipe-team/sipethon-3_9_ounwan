@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useForm, useWatch } from 'react-hook-form';
-import { axiosClient } from '../../feature/axios/axios-client';
-import { FortuneData } from '../../feature/form/form-response-schema';
-import { cn } from '../../utils/tw-merge';
+import { axiosClient } from '@/feature/axios/axios-client.ts';
+import { FortuneData } from '@/feature/form/form-response-schema.ts';
+import { cn } from '@/utils/tw-merge.ts';
 
 interface DefaultFormValues {
   name: string;
@@ -223,6 +223,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { LoadingSnake } from '@/feature/lottie/loading';
 import { useState } from 'react';
+import { DecoratedBox } from '@/components/DecoratedBox.tsx';
 
 export function CustomAlertDialog({
   isOpen,
@@ -272,13 +273,21 @@ export function LoadingOverlay({ isPending }: { isPending: boolean }) {
       <AlertDialogTitle hidden={true} />
       <AlertDialogContent className="h-full max-w-[500px]">
         <AlertDialogDescription className="flex h-full w-full flex-col items-center justify-center">
-          사주분석중...
-          {isPending && (
-            <div className="my-10">
-              <LoadingSnake />
+          <DecoratedBox>
+            <div className="py-15 flex flex-col items-center justify-center px-10 py-20">
+              <p className="text-2xl font-bold text-[#363E76]">
+                사주 분석중...
+              </p>
+              {isPending && (
+                <div className="my-10">
+                  <LoadingSnake />
+                </div>
+              )}
+              <p className="text-[#363E76]">
+                2025년은 소띠, 뱀띠 닭띠의 운세가 좋아요
+              </p>
             </div>
-          )}
-          2025년은 소띠, 뱀띠 닭띠의 운세가 좋아요
+          </DecoratedBox>
         </AlertDialogDescription>
       </AlertDialogContent>
     </AlertDialog>
