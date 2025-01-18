@@ -11,7 +11,7 @@ function RouteComponent() {
 
   return (
     <section className="flex h-full w-full flex-col">
-      <div className="flex h-[60px] w-full flex-none items-center border-b-[2px] border-solid border-gray-300 px-6 text-[32px] text-[#394F6E]">
+      <div className="flex h-[60px] w-full flex-none items-center border-b-[2px] border-solid border-gray-200 px-6 text-[32px] text-[#394F6E]">
         <h1>올해의 운세 완성</h1>
       </div>
       <article className="my-4 flex h-full w-full flex-col items-stretch px-6">
@@ -22,7 +22,7 @@ function RouteComponent() {
               className="w-[103px]"
               alt=""
             ></img>
-            <p className="text-center text-2xl font-semibold">
+            <p className="text-center text-2xl font-semibold text-[#363E76]">
               건강, 사랑, 일, 금전까지! <br />
               2025년의 운세를 확인하고 <br />
               부족한 운세는 채워주는 <br />
@@ -30,7 +30,7 @@ function RouteComponent() {
             </p>
           </div>
         </DecoratedBox>
-        <p className="pt-4 text-gray-500">* 운세는 재미로 보기! 맹신금지X</p>
+        <p className="pt-4 text-gray-400">* 운세는 재미로 보기! 맹신금지X</p>
       </article>
       <div className="h-[15%] w-full flex-none">
         <button

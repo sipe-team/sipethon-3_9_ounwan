@@ -224,6 +224,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { LoadingSnake } from '@/feature/lottie/loading';
 import { useState } from 'react';
+import { DecoratedBox } from '@/components/DecoratedBox.tsx';
 
 export function CustomAlertDialog({
   isOpen,
@@ -287,13 +288,21 @@ export function LoadingOverlay({ isPending }: { isPending: boolean }) {
             사주 정보를 분석하고 있습니다. 잠시만 기다려주세요.
           </VisuallyHidden>
           <AlertDialogDescription className="flex h-full w-full flex-col items-center justify-center">
-            사주분석중...
-            {isPending && (
-              <div className="my-10">
-                <LoadingSnake />
+            <DecoratedBox>
+              <div className="flex flex-col items-center justify-center px-10 py-20 text-center">
+                <p className="text-xl font-semibold text-[#363E76]">
+                  사주 분석중...
+                </p>
+                {isPending && (
+                  <div className="my-10">
+                    <LoadingSnake />
+                  </div>
+                )}
+                <p className="text-[#363E76]">
+                  2025년은 소띠, 뱀띠 닭띠의 운세가 좋아요
+                </p>
               </div>
-            )}
-            2025년은 소띠, 뱀띠 닭띠의 운세가 좋아요
+            </DecoratedBox>
           </AlertDialogDescription>
         </div>
       </AlertDialogContent>
