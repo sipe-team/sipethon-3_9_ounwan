@@ -15,6 +15,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as FormIndexImport } from './routes/form/index'
+import { Route as DownloadIndexImport } from './routes/download/index'
 
 // Create Virtual Routes
 
@@ -32,6 +33,18 @@ const IndexRoute = IndexImport.update({
 const FormIndexRoute = FormIndexImport.update({
   id: '/form/',
   path: '/form/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DownloadIndexRoute = DownloadIndexImport.update({
+  id: '/download/',
+  path: '/download/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DownloadIndexRoute = DownloadIndexImport.update({
+  id: '/download/',
+  path: '/download/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -62,6 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/result/$id': {
+      id: '/result/$id'
+      path: '/result/$id'
+      fullPath: '/result/$id'
+      preLoaderRoute: typeof ResultIdLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/download/': {
+      id: '/download/'
+      path: '/download'
+      fullPath: '/download'
+      preLoaderRoute: typeof DownloadIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/form/': {
       id: '/form/'
       path: '/form'
@@ -90,6 +117,8 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/result/$id': typeof ResultIdLazyRoute
+  '/download': typeof DownloadIndexRoute
   '/form': typeof FormIndexRoute
   '/result/$id/detail': typeof ResultIdDetailLazyRoute
   '/result/$id': typeof ResultIdIndexLazyRoute
@@ -97,6 +126,8 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/result/$id': typeof ResultIdLazyRoute
+  '/download': typeof DownloadIndexRoute
   '/form': typeof FormIndexRoute
   '/result/$id/detail': typeof ResultIdDetailLazyRoute
   '/result/$id': typeof ResultIdIndexLazyRoute
@@ -105,6 +136,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/result/$id': typeof ResultIdLazyRoute
+  '/download/': typeof DownloadIndexRoute
   '/form/': typeof FormIndexRoute
   '/result/$id/detail': typeof ResultIdDetailLazyRoute
   '/result/$id/': typeof ResultIdIndexLazyRoute
@@ -112,15 +145,17 @@ export interface FileRoutesById {
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/form' | '/result/$id/detail' | '/result/$id'
+  fullPaths: '/' | '/result/$id' | '/download' | '/form'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/form' | '/result/$id/detail' | '/result/$id'
-  id: '__root__' | '/' | '/form/' | '/result/$id/detail' | '/result/$id/'
+  to: '/' | '/result/$id' | '/download' | '/form'
+  id: '__root__' | '/' | '/result/$id' | '/download/' | '/form/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ResultIdLazyRoute: typeof ResultIdLazyRoute
+  DownloadIndexRoute: typeof DownloadIndexRoute
   FormIndexRoute: typeof FormIndexRoute
   ResultIdDetailLazyRoute: typeof ResultIdDetailLazyRoute
   ResultIdIndexLazyRoute: typeof ResultIdIndexLazyRoute
@@ -128,6 +163,8 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ResultIdLazyRoute: ResultIdLazyRoute,
+  DownloadIndexRoute: DownloadIndexRoute,
   FormIndexRoute: FormIndexRoute,
   ResultIdDetailLazyRoute: ResultIdDetailLazyRoute,
   ResultIdIndexLazyRoute: ResultIdIndexLazyRoute,
@@ -144,13 +181,19 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/form/",
-        "/result/$id/detail",
-        "/result/$id/"
+        "/result/$id",
+        "/download/",
+        "/form/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/result/$id": {
+      "filePath": "result/$id.lazy.tsx"
+    },
+    "/download/": {
+      "filePath": "download/index.tsx"
     },
     "/form/": {
       "filePath": "form/index.tsx"

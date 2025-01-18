@@ -1,3 +1,4 @@
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useForm, useWatch } from 'react-hook-form';
@@ -234,6 +235,7 @@ export function CustomAlertDialog({
   errors: any;
   setAlertOpen: (isOpen: boolean) => void;
 }) {
+  const alertDialogDescriptionId = 'alert-dialog-description';
   const getFirstErrorMessege = (errors: any) => {
     if (errors?.name) {
       return errors.name.message;
@@ -248,7 +250,12 @@ export function CustomAlertDialog({
 
   return (
     <AlertDialog open={isOpen} onOpenChange={setAlertOpen}>
-      <AlertDialogContent className="w-[90%] max-w-[400px] rounded-md">
+      <AlertDialogTitle hidden={true} />
+      <AlertDialogContent
+        className="w-[90%] max-w-[400px] rounded-md"
+        aria-describedby={alertDialogDescriptionId}
+      >
+        <AlertDialogDescription>커스텀 다이얼로그</AlertDialogDescription>
         <AlertDialogHeader>
           <AlertDialogTitle className="text-center font-[#394F6E]">
             {getFirstErrorMessege(errors)}
@@ -268,27 +275,28 @@ export function CustomAlertDialog({
 }
 
 export function LoadingOverlay({ isPending }: { isPending: boolean }) {
+  const dialogDescriptionId = 'loading-dialog-description';
   return (
     <AlertDialog open={isPending}>
       <AlertDialogTitle hidden={true} />
-      <AlertDialogContent className="h-full max-w-[500px]">
-        <AlertDialogDescription className="flex h-full w-full flex-col items-center justify-center">
-          <DecoratedBox>
-            <div className="py-15 flex flex-col items-center justify-center px-10 py-20">
-              <p className="text-2xl font-bold text-[#363E76]">
-                사주 분석중...
-              </p>
-              {isPending && (
-                <div className="my-10">
-                  <LoadingSnake />
-                </div>
-              )}
-              <p className="text-[#363E76]">
-                2025년은 소띠, 뱀띠 닭띠의 운세가 좋아요
-              </p>
-            </div>
-          </DecoratedBox>
-        </AlertDialogDescription>
+      <AlertDialogContent
+        className="h-full max-w-[500px]"
+        aria-describedby={dialogDescriptionId}
+      >
+        <div id={dialogDescriptionId}>
+          <VisuallyHidden>
+            사주 정보를 분석하고 있습니다. 잠시만 기다려주세요.
+          </VisuallyHidden>
+          <AlertDialogDescription className="flex h-full w-full flex-col items-center justify-center">
+            사주분석중...
+            {isPending && (
+              <div className="my-10">
+                <LoadingSnake />
+              </div>
+            )}
+            2025년은 소띠, 뱀띠 닭띠의 운세가 좋아요
+          </AlertDialogDescription>
+        </div>
       </AlertDialogContent>
     </AlertDialog>
   );
