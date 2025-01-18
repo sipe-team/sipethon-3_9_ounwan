@@ -1,4 +1,4 @@
-import { Outlet, createRootRoute, useNavigate } from '@tanstack/react-router';
+import { Outlet, createRootRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import * as React from 'react';
 
@@ -7,8 +7,6 @@ export const Route = createRootRoute({
 });
 
 function RootComponent() {
-  const navigate = useNavigate();
-
   return (
     <React.Fragment>
       <main className="mx-auto flex max-h-[840px] w-full justify-center">

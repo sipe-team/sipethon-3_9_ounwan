@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import { createLazyFileRoute, useNavigate } from '@tanstack/react-router';
 import { useMutation } from '@tanstack/react-query';
+import { createLazyFileRoute, useNavigate } from '@tanstack/react-router';
 
-import { FortuneData } from '@/feature/form/form-response-schema.ts';
 import { axiosClient } from '@/feature/axios/axios-client.ts';
+import { FortuneData } from '@/feature/form/form-response-schema.ts';
 
 import { DecoratedBox } from '@/components/DecoratedBox.tsx';
 
@@ -17,7 +17,7 @@ function Result() {
   const [data, setData] = useState<FortuneData | null>(null);
   const [totalScore, setTotalScore] = useState<number>(0);
   const { id } = Route.useParams();
-  const { mutateAsync: getFortuneData, isPending } = useMutation({
+  const { mutateAsync: getFortuneData } = useMutation({
     mutationFn: async (id: string) => {
       const response = await axiosClient.post<FortuneData>(`results/${id}`);
       return response.data;

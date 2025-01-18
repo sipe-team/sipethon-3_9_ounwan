@@ -1,10 +1,10 @@
+import { axiosClient } from '@/feature/axios/axios-client.ts';
+import { FortuneData } from '@/feature/form/form-response-schema.ts';
+import { cn } from '@/utils/tw-merge.ts';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useForm, useWatch } from 'react-hook-form';
-import { axiosClient } from '@/feature/axios/axios-client.ts';
-import { FortuneData } from '@/feature/form/form-response-schema.ts';
-import { cn } from '@/utils/tw-merge.ts';
 
 interface DefaultFormValues {
   name: string;
@@ -28,7 +28,7 @@ function Form() {
       );
       return response.data;
     },
-    onError: (error: unknown) => {
+    onError: () => {
       alert('운세 정보 제출에 실패했습니다. 다시 시도해주세요.');
     },
   });
@@ -224,7 +224,6 @@ import {
 } from '@/components/ui/alert-dialog';
 import { LoadingSnake } from '@/feature/lottie/loading';
 import { useState } from 'react';
-import { DecoratedBox } from '@/components/DecoratedBox.tsx';
 
 export function CustomAlertDialog({
   isOpen,

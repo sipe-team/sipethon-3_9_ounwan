@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
+import { useQuery } from '@tanstack/react-query';
 import { createLazyFileRoute, useNavigate } from '@tanstack/react-router';
-import { useMutation, useQuery } from '@tanstack/react-query';
 
-import { FortuneData } from '@/feature/form/form-response-schema.ts';
 import { axiosClient } from '@/feature/axios/axios-client.ts';
+import { FortuneData } from '@/feature/form/form-response-schema.ts';
 import { mapFortuneData, MappedFortune } from '@/utils/fortuneMapper.ts';
 import { cn } from '@/utils/tw-merge.ts';
 
