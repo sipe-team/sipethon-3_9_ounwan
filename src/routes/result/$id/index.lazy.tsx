@@ -37,7 +37,7 @@ function Result() {
           4
       )
     );
-  }, [isSuccess]);
+  }, [id, data, isSuccess]);
 
   return (
     <section className="flex h-full w-full flex-col">
