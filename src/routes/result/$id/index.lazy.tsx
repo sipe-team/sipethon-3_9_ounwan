@@ -28,15 +28,15 @@ function Result() {
 
     const res = data.data;
     setFortuneData(res);
-    setTotalScore(
-      Math.floor(
-        (res?.health_score +
-          res?.job_score +
-          res?.love_score +
-          res?.money_score) /
-          4
-      )
+    const score = Math.floor(
+      (res?.health_score +
+        res?.job_score +
+        res?.love_score +
+        res?.money_score) /
+        4
     );
+
+    setTotalScore(isNaN(score) ? 0 : score);
   }, [id, data, isSuccess]);
 
   return (
