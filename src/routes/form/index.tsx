@@ -35,7 +35,6 @@ function Form() {
     name: ['gender', 'isLunar'],
   });
 
-  // const { }
   const onSubmit = () => {};
 
   const onError = (errors: any) => {
@@ -59,7 +58,7 @@ function Form() {
       onSubmit={handleSubmit(onSubmit, onError)}
       className="flex h-full w-full flex-col"
     >
-      <div className="flex h-[10%] w-full grow-0 items-center border-b-[2px] border-solid border-gray-300 px-6 text-[32px] text-[#394F6E]">
+      <div className="flex h-[15%] w-full grow-0 items-center border-b-[2px] border-solid border-gray-300 px-6 text-[32px] text-[#394F6E]">
         <h1>올해의 운세 완성</h1>
       </div>
       <div className="my-4 flex h-[10%] w-full grow-0 items-center justify-start px-6 text-[24px] font-semibold text-[#363E76]">
@@ -149,7 +148,7 @@ function Form() {
           <section
             onClick={() => setValue('isLunar', true)}
             className={cn(
-              'box-border flex h-10 w-[83px] cursor-pointer items-center justify-center rounded-r-[100px] border border-solid',
+              'box-border flex h-10 w-[83px] cursor-poi~nter items-center justify-center rounded-r-[100px] border border-solid',
               {
                 'bg-[#394F6E]': isLunar === true,
               }

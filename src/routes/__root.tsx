@@ -11,8 +11,8 @@ function RootComponent() {
 
   return (
     <React.Fragment>
-      <main className="flex h-full w-full items-center justify-center">
-        <div className="flex h-full w-[500px] max-w-[500px] flex-col items-center justify-between">
+      <main className="mx-auto flex max-h-[840px] w-full items-center justify-center">
+        <div className="flex h-screen w-[500px] max-w-[500px] flex-col items-center justify-between">
           <Outlet />
         </div>
       </main>
