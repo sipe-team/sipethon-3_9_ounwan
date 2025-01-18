@@ -183,7 +183,7 @@ function Form() {
         </section>
       </article>
       <div className="h-[15%] w-full flex-none">
-        <button className="flex h-10 w-full px-6" type="submit">
+        <button className="flex h-12 w-full px-6" type="button">
           <div className="flex h-full w-full cursor-pointer items-center justify-center rounded-md bg-[#29518C] text-white">
             2025년 운세 확인하기
           </div>

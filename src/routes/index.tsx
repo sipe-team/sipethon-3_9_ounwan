@@ -33,11 +33,11 @@ function RouteComponent() {
       </article>
       <div className="h-[15%] w-full flex-none">
         <button
-          className="flex h-10 w-full px-6"
+          className="flex h-12 w-full px-6"
           type="button"
           onClick={() => navigate({ to: '/form' })}
         >
-          <div className="flex h-full w-full cursor-pointer items-center justify-center rounded-md bg-[#29518C] text-white">
+          <div className="flex h-full w-full cursor-pointer items-center justify-center rounded-md bg-[#363E76] text-white">
             2025년 내 사주정보 입력하기
           </div>
         </button>
