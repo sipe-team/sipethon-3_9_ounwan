@@ -32,6 +32,7 @@ function Form() {
     },
   });
   const queryClient = useQueryClient();
+  const [isAlertOpen, setAlertOpen] = useState(false);
 
   const {
     register,
@@ -62,21 +63,8 @@ function Form() {
     } catch (error) {}
   };
 
-  const onError = (errors: any) => {
-    // name, birthday, birthTime 순서로 에러 체크
-    if (errors.name) {
-      alert(errors.name.message || '하이');
-      return;
-    }
-    if (errors.birthday) {
-      alert(errors.birthday.message);
-      return;
-    }
-    if (errors.birthTime) {
-      alert(errors.birthtime.message);
-      return;
-    }
-  };
+  const onError = (errors: any) =>
+    (errors.name || errors.birthday || errors.birthtime) && setAlertOpen(true);
 
   return (
     <form
@@ -200,7 +188,7 @@ function Form() {
                 required: '태어난 시간을 입력해주세요',
                 pattern: {
                   value: /^([01][0-9]|2[0-3]):([0-5][0-9])$/,
-                  message: '올바른 시간 형식으로 입력해주세요 (예: 18:20)',
+                  message: `올바른 시간 형식으로 입력해주세요(예: 18:20)`,
                 },
               })}
             ></input>
@@ -208,12 +196,71 @@ function Form() {
         </section>
       </article>
       <div className="h-[15%] w-full flex-none">
-        <button className="flex h-12 w-full px-6" type="button">
+        <button className="flex h-12 w-full px-6" type="submit">
           <div className="flex h-full w-full cursor-pointer items-center justify-center rounded-md bg-[#29518C] text-white">
             2025년 운세 확인하기
           </div>
         </button>
       </div>
+      <CustomAlertDialog
+        isOpen={isAlertOpen}
+        errors={errors}
+        setAlertOpen={setAlertOpen}
+      />
     </form>
+  );
+}
+
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import { useState } from 'react';
+
+export function CustomAlertDialog({
+  isOpen,
+  errors,
+  setAlertOpen,
+}: {
+  isOpen: boolean;
+  errors: any;
+  setAlertOpen: (boolean) => void;
+}) {
+  const getFirstErrorMessege = (errors) => {
+    console.log(errors, 'errors');
+    if (errors?.name) {
+      return errors.name.message;
+    }
+    if (errors?.birthday) {
+      return errors.birthday.message;
+    }
+    if (errors?.birthtime) {
+      return errors.birthtime.message;
+    }
+  };
+
+  return (
+    <AlertDialog open={isOpen} onOpenChange={setAlertOpen}>
+      <AlertDialogContent className="w-[90%] max-w-[400px] rounded-md">
+        <AlertDialogHeader>
+          <AlertDialogTitle className="text-center font-[#394F6E]">
+            {getFirstErrorMessege(errors)}
+          </AlertDialogTitle>
+          {/* <AlertDialogDescription></AlertDialogDescription> */}
+        </AlertDialogHeader>
+        <AlertDialogFooter className="flex h-10 w-full justify-center sm:justify-center">
+          <AlertDialogCancel
+            className="w-[100px] justify-center self-center border-[2px] border-solid border-[#394F6E] text-center"
+            onClick={() => setAlertOpen(false)}
+          >
+            닫기
+          </AlertDialogCancel>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }
